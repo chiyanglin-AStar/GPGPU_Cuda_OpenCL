@@ -1,0 +1,37 @@
+ref from : https://stackoverflow.com/questions/13125714/how-to-get-the-nvidia-driver-version-from-the-command-line 
+
+disable security boot as first step
+
+nvidia-smi
+
+cat /proc/driver/nvidia/version
+
+or 
+
+modinfo nvidia
+
+lshw -c video
+
+lspci -nnk | egrep -i --color 'vga|3d|2d' -A3 | grep 'in use'
+
+lspci -nnk | grep -i vga -A3
+
+hwinfo --gfxcard
+
+sudo apt install mesa-utils
+glxinfo -B
+
+
+
+lsmod | grep nouveau 
+
+
+vi /etc/modprobe.d/blacklist-nouveau.conf 
+
+ # add to the end (create new if it does not exist)
+
+blacklist nouveau
+options nouveau modeset=0
+
+~# update-initramfs -u
+~# reboot 
