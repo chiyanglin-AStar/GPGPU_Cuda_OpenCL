@@ -1,5 +1,8 @@
-ref from : https://stackoverflow.com/questions/13125714/how-to-get-the-nvidia-driver-version-from-the-command-line 
+build by CodingCoffee
 
+ref from : https://stackoverflow.com/questions/13125714/how-to-get-the-nvidia-driver-version-from-the-command-line 
+         : https://frl.nyu.edu/tutorials-for-installing-ubuntu-18-04-dual-system-and-nvidia-driver-cuda-pytorch-gpu-toolchain/
+         
 disable security boot as first step
 
 nvidia-smi
