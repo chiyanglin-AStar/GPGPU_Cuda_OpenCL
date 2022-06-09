@@ -1,0 +1,68 @@
+OpenCL install 
+
+need to install GPU Driver ,firstly!
+
+sudo apt install nvidia-cuda-toolkit clinfo
+
+clinfo
+
+ref from : https://linuxhandbook.com/setup-opencl-linux-docker/
+
+Install the NVIDIA Container Runtime
+Here, you have to additionally install the nvidia-container-runtime package.
+
+To be able to install it, you must first add the repository details. Make sure you have Curl installed if you haven't already got it on your system.
+
+sudo apt install curl
+curl -s -L https://nvidia.github.io/nvidia-container-runtime/gpgkey | \
+  sudo apt-key add -
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+curl -s -L https://nvidia.github.io/nvidia-container-runtime/$distribution/nvidia-container-runtime.list | \
+  sudo tee /etc/apt/sources.list.d/nvidia-container-runtime.list
+sudo apt update
+sudo apt install nvidia-container-runtime
+Creating the Dockerfile
+It is necessary that you replicate all that you did on the host system on a fresh new image so that you can use it to launch our custom OpenCL applications on a container (will elaborate on that later).
+
+Create a new directory for your NVIDIA GPU OpenCL project and move into it:
+
+mkdir nvidia-opencl
+cd nvidia-opencl
+
+Use your favorite text editor (Vim/Nano or any other) to create the following Dockerfile and save it:
+
+FROM ubuntu:20.04
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get -y upgrade \
+  && apt-get install -y \
+    apt-utils \
+    unzip \
+    tar \
+    curl \
+    xz-utils \
+    ocl-icd-libopencl1 \
+    opencl-headers \
+    clinfo \
+    ;
+
+RUN mkdir -p /etc/OpenCL/vendors && \
+    echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
+Building the Dockerfile
+So now that you have the necessary Dockerfile to get started, let's build it. I'm naming the image as nvidia-opencl:
+
+docker build -t nvidia-opencl .
+Launch the OpenCL Container
+Based on the new image that you just built, it's time to launch the new OpenCL container!
+
+First, permit your Linux username on the local machine to connect to the X windows display with the following command:
+
+xhost +local:username
+With the following command, you can now directly enter the local container's shell based on the new image just created:
+
+docker run --rm -it --gpus all -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY nvidia-opencl
+Verify your OpenCL configuration on Docker
+Now that you are inside the container shell, you can run the clinfo command to verify your OpenCL configuration just like you did on the bare-metal host system:
+
+root@7b39b04c019f:/# clinfo
