@@ -1,0 +1,25 @@
+
+
+Cuda Tutorial   
+
+https://github.com/PacktPublishing/Learn-CUDA-Programming
+
+https://github.com/puttsk/cuda-tutorial
+
+https://github.com/numba/nvidia-cuda-tutorial
+
+https://github.com/NVIDIA/cuda-samples
+
+https://cuda-tutorial.github.io/
+
+OpenCL  
+
+https://github.com/ysh329/OpenCL-101
+
+https://github.com/gcielniak/OpenCL-Tutorials
+
+https://github.com/KhronosGroup/OpenCL-Guide
+
+https://github.com/michel-meneses/great-opencl-examples
+
+https://github.com/mikeroyal/OpenCL-Guide
